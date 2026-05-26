@@ -35,8 +35,6 @@
     }
     pre code { background: none; padding: 0; }
     img { max-width: 100%; }
-    .img-row { display: flex; gap: 8px; margin: 16px 0; flex-wrap: wrap; }
-    .img-row img { flex: 1; min-width: 200px; border: 1px solid #e1e4e8; border-radius: 4px; }
     .img-single { margin: 16px 0; text-align: center; }
     .img-single img { border: 1px solid #e1e4e8; border-radius: 4px; }
     .caption { font-size: 0.88em; color: #586069; margin-top: 6px; }
@@ -64,30 +62,13 @@
       margin-right: 16px;
       font-weight: 600;
     }
-    .note {
-      background: #fffbdd;
-      border: 1px solid #e8d44d;
-      border-radius: 6px;
-      padding: 12px 16px;
-      margin: 12px 0;
-      font-size: 0.95em;
-    }
-    .note strong { color: #735c0f; }
-    .tip {
-      background: #f0fff4;
-      border: 1px solid #34d058;
-      border-radius: 6px;
-      padding: 12px 16px;
-      margin: 12px 0;
-      font-size: 0.95em;
-    }
-    .tip strong { color: #22863a; }
     .authors { font-size: 1.05em; color: #586069; }
   </style>
 </head>
 <body>
 
-<h1>ExpressEdit: Fast Editing of Stylized Facial Expressions with Diffusion Models in Photoshop</h1>
+<h1>ExpressEdit</h1>
+<p style="font-size:1.1em; color:#586069; margin-top:-8px;">Fast Editing of Stylized Facial Expressions with Diffusion Models in Photoshop</p>
 
 <p class="authors">
   Kenan Tang, Jiasheng Guo, Jeffrey Lin, Yao Qin<br />
@@ -95,10 +76,10 @@
 </p>
 
 <div class="links">
-  <a href="https://arxiv.org/abs/2604.03448">📄 Paper</a>
-  <a href="https://github.com/kenantang/ExpressEdit">💻 Code</a>
-  <a href="https://huggingface.co/datasets/JiashengGuo/ExpressEdit">🤗 Dataset</a>
-  <a href="https://huggingface.co/spaces/JiashengGuo/ExpressEdit-RAG">🎭 RAG Demo</a>
+  <a href="https://arxiv.org/abs/2604.03448">Paper</a>
+  <a href="https://github.com/kenantang/ExpressEdit">Code</a>
+  <a href="https://huggingface.co/datasets/JiashengGuo/ExpressEdit">Dataset</a>
+  <a href="https://huggingface.co/spaces/JiashengGuo/ExpressEdit-RAG">RAG Demo</a>
 </div>
 
 <h2>Introduction</h2>
@@ -111,47 +92,44 @@
 
 <div class="img-single">
   <img src="assets/teaser.png" alt="ExpressEdit teaser" />
-  <p class="caption">ExpressEdit generates diverse stylized expressions, including multi-word descriptions ("clenched teeth") and emoticons ("@_@").</p>
+  <p class="caption">ExpressEdit generates diverse stylized expressions on original images, supporting both multi-word descriptions and emoticons as input.</p>
 </div>
 
-<h2>Why ExpressEdit?</h2>
-
-<h3>No Global Noise</h3>
+<h2>Expression Database</h2>
 
 <p>
-  Baseline models introduce visible noise across the entire image with every edit. Over multiple editing steps, this noise accumulates and corrupts the image. ExpressEdit edits only the selected region, leaving the rest of the image completely untouched. Even after 100 repeated edits on the same region, the only artifacts appear around the selection edge and can be repaired in one step.
+  ExpressEdit includes a database of 135 curated expression tags from Danbooru. Each tag contains a definition, alternative tags in Japanese, Chinese, and Korean, 5 example images across different characters, and 5 example stories in each of four languages.
+</p>
+
+<p>
+  Tags can be combined (e.g. <code>smile, blush</code>) for richer expressions, and eyes and mouth can be edited separately for more combinations. You can use the <a href="https://huggingface.co/spaces/JiashengGuo/ExpressEdit-RAG">RAG demo</a> to retrieve the right tag from a free-form story description.
+</p>
+
+<h2>No Global Noise</h2>
+
+<p>
+  Baseline models introduce visible noise across the entire image with every edit. Over multiple steps, this noise accumulates and corrupts the image. ExpressEdit edits only the selected region, with no modifications outside that area. Even after 100 repeated edits on the same region, the only artifacts appear around the selection edge and can be repaired in one step.
 </p>
 
 <div class="img-single">
-  <img src="assets/no_noise.png" alt="Noise comparison" />
-  <p class="caption">After 8 iterative edits, noise from Nano Banana 2 Pro corrupts the image. ExpressEdit maintains clean results.</p>
+  <img src="assets/no_noise.png" alt="Noise comparison across models" />
+  <p class="caption">Baseline models introduce destructive noise after each editing step. ExpressEdit produces clean, non-destructive results even over many iterations.</p>
 </div>
 
-<h3>Pixel-Precise Editing</h3>
+<h2>Precise Editing</h2>
 
 <p>
-  All baseline models fail to follow precise numeric instructions like "reduce iris diameter by 50%." With ExpressEdit, you simply use Photoshop's Select and Scale to resize the iris, then generate — the diffusion model fills in the gap. No numeric prompt required.
+  All baseline models fail to follow precise numeric instructions like "reduce iris diameter by 50%." With ExpressEdit, you use Photoshop's native Select and Scale to resize the element, then generate. The diffusion model fills in the gap cleanly, without specifying numbers in the prompt.
 </p>
 
 <div class="img-single">
   <img src="assets/precise_edit.png" alt="Precise editing comparison" />
-  <p class="caption">ExpressEdit precisely reduces iris size by 50% using a simple transformation. All baseline models fail on this task.</p>
+  <p class="caption">ExpressEdit precisely reduces iris size by 50% using a simple Photoshop transformation. All baseline models fail on this task.</p>
 </div>
 
-<h3>Works with Liquify</h3>
+<h2>Fast Inference</h2>
 
-<p>
-  Photoshop's Liquify tool is the most intuitive way to drag facial elements around, but it leaves heavy deformation artifacts. ExpressEdit automatically repairs these distortions into natural results, so you can use Liquify casually without worrying about precision.
-</p>
-
-<div class="img-single">
-  <img src="assets/liquify.png" alt="Liquify repair" />
-  <p class="caption">Extreme distortions from casual Liquify usage are repaired into natural expressions by ExpressEdit.</p>
-</div>
-
-<h3>Fast Inference</h3>
-
-<p>ExpressEdit is the fastest among all models we tested, with zero API cost:</p>
+<p>ExpressEdit achieves the lowest latency among all tested models, with zero API cost.</p>
 
 <table>
   <thead>
@@ -167,95 +145,25 @@
     <tr class="ours"><td>ExpressEdit + Speed-Up LoRA (8 steps)</td><td>2.18 ± 0.02</td></tr>
   </tbody>
 </table>
-<p class="caption">Latency measured on a single NVIDIA RTX 4090 GPU with 1024×1024 images, mean ± std over 10 runs.</p>
+<p class="caption">Measured on a single NVIDIA RTX 4090 with 1024x1024 images. Mean ± std over 10 runs.</p>
 
 <h2>Quick Start</h2>
 
-<p>The editing workflow has 4 steps:</p>
+<p>The editing workflow has four steps:</p>
 
 <ol>
-  <li><strong>Set the prompt.</strong> Type an expression tag (e.g. <code>smile</code>, <code>clenched teeth</code>, <code>+_+</code>) into the plugin prompt box. You can use the <a href="https://huggingface.co/spaces/JiashengGuo/ExpressEdit-RAG">RAG demo</a> to find the right tag from a story description.</li>
-  <li><strong>(Optional) Apply a transformation.</strong> Use Liquify, Scale, or the Brush to roughly hint at the desired expression. This step can be skipped for 100 out of 135 tags.</li>
+  <li><strong>Set the prompt.</strong> Type an expression tag (e.g. <code>smile</code>, <code>clenched teeth</code>, <code>+_+</code>) into the plugin prompt box.</li>
+  <li><strong>Apply a transformation (optional).</strong> Use Scale, Liquify, or the Brush to roughly hint at the desired expression. This step can be skipped for 100 out of 135 tags.</li>
   <li><strong>Select the region.</strong> Use Quick Selection or the Selection Brush to cover the area to be edited. The selection does not need to be precise.</li>
-  <li><strong>Click Generate.</strong> ExpressEdit returns a clean result as a new layer. Merge it with the original when satisfied.</li>
+  <li><strong>Click Generate.</strong> ExpressEdit returns a clean result as a new layer.</li>
 </ol>
 
 <div class="img-single">
   <img src="assets/workflow.png" alt="ExpressEdit workflow" />
-  <p class="caption">The ExpressEdit workflow: Original → Transform (optional) → Select → Generate result.</p>
+  <p class="caption">The ExpressEdit workflow: start with an original image, apply an optional transformation, select the region, and generate.</p>
 </div>
 
-<h2>Expression Database</h2>
-
-<p>
-  ExpressEdit includes a database of 135 curated expression tags from Danbooru, each with:
-</p>
-
-<ul>
-  <li>A definition from the official Danbooru wiki</li>
-  <li>Alternative tags in Japanese, Chinese, and Korean (from Pixiv)</li>
-  <li>5 example images generated across different characters</li>
-  <li>5 example stories in each of English, Chinese, Japanese, and Korean</li>
-</ul>
-
-<p>
-  Tags can be combined (e.g. <code>smile, blush</code>) for richer expressions. Eyes and mouth can also be edited separately for even more combinations.
-</p>
-
-<h2>Usage Tips</h2>
-
-<div class="note">
-  <strong>⚠️ Model version consistency.</strong>
-  The base model used for generating the original image and for editing should ideally be the same version. Switching between model versions (e.g., WAI-illustrious v16 vs v17) can cause subtle style mismatches such as different default lighting or facial proportions.
-</div>
-
-<div class="tip">
-  <strong>💡 Denoising strength.</strong>
-  The default 70% works well in most cases. For edits involving hair or other fine details, reducing to ~50% can avoid artifacts on weaker edges that may not be captured by the Canny edge ControlNet.
-</div>
-
-<div class="tip">
-  <strong>💡 Selection size.</strong>
-  Larger selections generally produce better results. When the selection is too small, the model operates on limited context and is more likely to produce edge mismatches.
-</div>
-
-<div class="tip">
-  <strong>💡 Context dots.</strong>
-  When editing only a sub-region of the face (just the eyes or mouth), adding context dots around the mask helps the model understand the full facial layout.
-</div>
-
-<div class="tip">
-  <strong>💡 Speed-up LoRA.</strong>
-  The Lightning LoRA cuts inference from ~4s to ~2s. Use it for rapid prototyping; use full 30 steps for final renders.
-</div>
-
-<div class="tip">
-  <strong>💡 Transformation-free tags.</strong>
-  100 out of 135 tags can be edited without any Photoshop transformation. The remaining 35 (flagged in the plugin documentation) require a quick Liquify or Scale step.
-</div>
-
-<h2>Installation</h2>
-
-<p>Please refer to the <a href="https://github.com/kenantang/ExpressEdit">GitHub repository</a> for installation instructions. ExpressEdit requires:</p>
-
-<ul>
-  <li>Adobe Photoshop (version 27.4.0 or later)</li>
-  <li>A single consumer-grade GPU with 24 GB VRAM (e.g., NVIDIA RTX 4090)</li>
-  <li>The <a href="https://kenantang.github.io/spice/">SPICE</a> backend</li>
-  <li><a href="https://civitai.com/models/827184?modelVersionId=2514310">WAI-illustrious-SDXL</a> as the base model</li>
-  <li>A <a href="https://huggingface.co/lllyasviel/sd_control_collection/blob/main/diffusers_xl_canny_mid.safetensors">midsize Canny edge ControlNet model</a> for SDXL</li>
-</ul>
-
-<h2>Applications</h2>
-
-<p>ExpressEdit is designed for:</p>
-
-<ul>
-  <li><strong>Character design and iteration</strong> — quickly explore different expressions on a character</li>
-  <li><strong>Storyboard visualization</strong> — match character expressions to narrative beats</li>
-  <li><strong>Comic and manga production</strong> — edit expressions across panels efficiently</li>
-  <li><strong>Illustration workflows</strong> — fix AI-generated expression artifacts while maintaining style consistency</li>
-</ul>
+<p>For installation instructions and detailed setup guides, please refer to the <a href="https://github.com/kenantang/ExpressEdit">GitHub repository</a>. If you run into issues, feel free to open a GitHub issue or contact the authors.</p>
 
 <h2>Citation</h2>
 
