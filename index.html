@@ -36,6 +36,12 @@
     th, td { border: 1px solid #d8dee4; padding: 6px 13px; text-align: left; }
     th { background: #f6f8fa; font-weight: 600; }
     tr:nth-child(2n) { background: #f6f8fa; }
+    /* centered table block for the latency section */
+    .table-center { text-align: center; margin: 14px 0; }
+    .table-center table {
+      width: auto; display: inline-table; margin: 0 auto; text-align: left;
+    }
+    .table-center .cap { margin-top: 10px; }
     blockquote { border-left: 4px solid #d8dee4; margin: 16px 0; padding: 0 16px; color: #59636e; }
     ol { padding-left: 22px; }
     ol li { margin-bottom: 6px; }
@@ -103,6 +109,7 @@
 
 <p>Editing a character is rarely one step. You fix the eyes, then the hair, then the mouth, repeating many times. If each edit takes 40 seconds, the workflow becomes painful. ExpressEdit edits in 2 to 4 seconds on a single consumer GPU, far faster than proprietary models, with zero API cost.</p>
 
+<div class="table-center">
 <table>
   <thead><tr><th>Method</th><th>Latency (seconds)</th></tr></thead>
   <tbody>
@@ -116,6 +123,7 @@
   </tbody>
 </table>
 <p class="cap">Single NVIDIA RTX 4090, 1024x1024 images, mean ± std over 10 runs. A speed-up LoRA cuts latency by 46% with negligible quality loss, though full 30-step denoising is recommended for final detail.</p>
+</div>
 
 <h2>Workflow</h2>
 
