@@ -7,43 +7,43 @@
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      line-height: 1.6;
-      color: #24292e;
+      line-height: 1.65;
+      color: #1f2328;
       max-width: 820px;
       margin: 0 auto;
-      padding: 24px 16px 48px;
+      padding: 24px 16px 56px;
     }
-    h1 { font-size: 1.75em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
-    h2 { font-size: 1.35em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 2em; }
-    a { color: #0366d6; text-decoration: none; }
+    h1 { font-size: 1.9em; padding-bottom: 0.3em; border-bottom: 1px solid #d8dee4; margin-bottom: 8px; }
+    h2 { font-size: 1.5em; padding-bottom: 0.3em; border-bottom: 1px solid #d8dee4; margin-top: 2em; }
+    h3 { font-size: 1.15em; margin-top: 1.6em; margin-bottom: 0.2em; }
+    a { color: #0969da; text-decoration: none; }
     a:hover { text-decoration: underline; }
     code {
-      background: #f6f8fa; padding: 2px 6px; border-radius: 3px; font-size: 0.9em;
-      font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+      background: #eff1f3; padding: 2px 6px; border-radius: 4px; font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
     }
     pre { background: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; font-size: 0.85em; line-height: 1.5; }
     pre code { background: none; padding: 0; }
     img { max-width: 100%; }
-    .subtitle { font-size: 1.05em; color: #586069; margin-top: -6px; }
-    .authors { font-size: 1em; color: #586069; }
-    .links { margin: 12px 0 20px; }
+    .subtitle { font-size: 1.05em; color: #59636e; margin-top: 0; }
+    .authors { font-size: 1em; color: #59636e; }
+    .links { margin: 12px 0 8px; }
     .links a { display: inline-block; margin-right: 16px; font-weight: 600; }
-    .fig { margin: 20px 0; text-align: center; }
-    .fig img { border: 1px solid #e1e4e8; border-radius: 4px; }
-    .cap { font-size: 0.86em; color: #586069; margin-top: 8px; line-height: 1.5; }
-    table { border-collapse: collapse; width: 100%; margin: 16px 0; }
-    th, td { border: 1px solid #e1e4e8; padding: 8px 12px; text-align: left; }
+    .fig { margin: 16px 0; text-align: center; }
+    .fig img { border: 1px solid #d8dee4; border-radius: 4px; }
+    .cap { font-size: 0.85em; color: #59636e; margin-top: 8px; line-height: 1.5; }
+    table { border-collapse: collapse; width: 100%; margin: 14px 0; display: block; overflow-x: auto; }
+    th, td { border: 1px solid #d8dee4; padding: 6px 13px; text-align: left; }
     th { background: #f6f8fa; font-weight: 600; }
-    tr.ours { background: #f0fff4; font-weight: 600; }
-    blockquote { border-left: 4px solid #dfe2e5; margin: 16px 0; padding: 8px 16px; color: #6a737d; }
-    ol { padding-left: 20px; }
-    ol li { margin-bottom: 4px; }
+    tr:nth-child(2n) { background: #f6f8fa; }
+    blockquote { border-left: 4px solid #d8dee4; margin: 16px 0; padding: 0 16px; color: #59636e; }
+    ol { padding-left: 22px; }
+    ol li { margin-bottom: 6px; }
   </style>
 </head>
 <body>
 
-<h1>ExpressEdit</h1>
-<p class="subtitle">Fast Editing of Stylized Facial Expressions with Diffusion Models in Photoshop</p>
+<h1>ExpressEdit: Fast Editing of Stylized Facial Expressions with Diffusion Models in Photoshop</h1>
 
 <p class="authors">
   Kenan Tang, Jiasheng Guo, Jeffrey Lin, Yao Qin<br/>
@@ -59,59 +59,49 @@
 
 <h2>Introduction</h2>
 
-<p>ExpressEdit is a free, open-source Photoshop plugin for editing stylized facial expressions on illustrated characters, powered by the <a href="https://kenantang.github.io/spice/">SPICE</a> backend and a database of 135 expression tags.</p>
+<p>Facial expressions bring illustrated characters to life. In real workflows, artists adjust a character's expression again and again, across panels of a comic, frames of a storyboard, or variations on a design sheet. ExpressEdit makes this fast and clean.</p>
+
+<p>ExpressEdit is a free, open-source Photoshop plugin for editing stylized facial expressions, powered by the <a href="https://kenantang.github.io/spice/">SPICE</a> diffusion backend and a database of 135 expression tags. It runs inside Photoshop, so edits combine the precision of native tools with the flexibility of a diffusion model.</p>
 
 <div class="fig">
   <img src="assets/teaser.png" alt="ExpressEdit teaser showing diverse expression editing results" />
   <p class="cap">ExpressEdit generates diverse stylized expressions from both multi-word descriptions and emoticons.</p>
 </div>
 
-<h2>Expression Database</h2>
+<h2>The Expression Database</h2>
 
-<p>ExpressEdit includes 135 curated Danbooru expression tags, each enriched with definitions, alternative tags in Japanese, Chinese, and Korean, example images, and multilingual stories. Use the <a href="https://huggingface.co/spaces/JiashengGuo/ExpressEdit-RAG">RAG demo</a> to find the right tag from a free-form story.</p>
+<p>The plugin uses a tag-based prompt format, which is unfamiliar to many new users. To lower this barrier, we built a database of 135 curated Danbooru expression tags, each with a definition, alternative tags in Japanese, Chinese, and Korean, example images, and example stories in four languages.</p>
+
+<p>An automatic tag selector retrieves the best tag for any story description, so users do not need to memorize the tags. Try it in the <a href="https://huggingface.co/spaces/JiashengGuo/ExpressEdit-RAG">RAG demo</a>.</p>
 
 <div class="fig">
   <img src="assets/rag.png" alt="Retrieval-augmented prompt generation pipeline" />
-  <p class="cap">The prompt generator converts a story into an expression tag via retrieval-augmented generation.</p>
+  <p class="cap">The selector converts a story into an expression tag, which is inserted into the prompt for the plugin.</p>
 </div>
 
-<h2>No Global Noise</h2>
+<h2>Features</h2>
 
-<p>Proprietary models introduce global noise with every edit, accumulating corruption over multiple steps. ExpressEdit only modifies the selected region.</p>
+<h3>Noise-Free Editing</h3>
+
+<p>Most AI editing models apply noise across the entire image, even outside the region you want to change. Because creative work is iterative, this noise accumulates edit after edit until the image is no longer usable. ExpressEdit modifies only the selected region, so the rest of the image stays untouched. Even under a stress test of 100 repeated edits, artifacts appear only at the selection edge and are removed in a single step.</p>
 
 <div class="fig">
   <img src="assets/no_noise.png" alt="Noise comparison across editing models" />
-  <p class="cap">Baseline models introduce destructive noise after each editing step. ExpressEdit produces clean, non-destructive results.</p>
+  <p class="cap">Baseline models introduce destructive noise after each edit. ExpressEdit stays clean across many iterations.</p>
 </div>
 
-<h2>Precise Editing</h2>
+<h3>Precise Editing</h3>
 
-<p>Baseline models fail to follow precise numeric instructions. With ExpressEdit, native Photoshop operations serve as hints to the diffusion model, enabling pixel-level control.</p>
+<p>Diffusion models follow text prompts but cannot make precise numerical edits, such as reducing iris size by exactly 50%. Because ExpressEdit runs inside Photoshop, you can use native tools as direct hints to the model: scale an element to resize it, liquify it to move it, paint a rough shape with a brush, or sketch a correction. The diffusion backend then renders a clean result from these hints, while a Canny ControlNet preserves contours and saturation.</p>
 
 <div class="fig">
-  <img src="assets/precise_edit.png" alt="Precise iris size reduction and saturation preservation" />
-  <p class="cap">Reducing iris diameter by 50% and preserving contour sharpness. All baseline models fail on these tasks.</p>
+  <img src="assets/precise_edit.png" alt="Precise iris size reduction and contour preservation" />
+  <p class="cap">Reducing iris diameter by 50% and preserving sharp contours. Baseline models fail on these tasks.</p>
 </div>
 
-<h2>Liquify Synergy</h2>
+<h3>Fast Inference for Iterative Workflows</h3>
 
-<p>Casual use of Photoshop's Liquify tool leaves heavy deformation artifacts. ExpressEdit automatically repairs these into natural results.</p>
-
-<div class="fig">
-  <img src="assets/liquify.png" alt="Liquify deformation repair by ExpressEdit" />
-  <p class="cap">Extreme distortions from Liquify are repaired into natural expressions by ExpressEdit.</p>
-</div>
-
-<h2>High-Resolution Editing</h2>
-
-<p>Selection-based editing allows ExpressEdit to operate on high-resolution images without quality loss.</p>
-
-<div class="fig">
-  <img src="assets/highres.png" alt="High resolution editing comparison" />
-  <p class="cap">Editing a 1664x2432 image. Nano Banana 2 Pro produces blurry contours and reduced saturation; ExpressEdit preserves sharp details.</p>
-</div>
-
-<h2>Fast Inference</h2>
+<p>Editing a character is rarely one step. You fix the eyes, then the hair, then the mouth, repeating many times. If each edit takes 40 seconds, the workflow becomes painful. ExpressEdit edits in 2 to 4 seconds on a single consumer GPU, far faster than proprietary models, with zero API cost.</p>
 
 <table>
   <thead><tr><th>Method</th><th>Latency (seconds)</th></tr></thead>
@@ -121,32 +111,39 @@
     <tr><td>Nano Banana 2 Pro</td><td>41.92 ± 22.08</td></tr>
     <tr><td>Nano Banana 2 Fast</td><td>23.18 ± 3.92</td></tr>
     <tr><td>Grok</td><td>7.11 ± 0.50</td></tr>
-    <tr class="ours"><td>ExpressEdit (30 steps)</td><td>4.06 ± 0.02</td></tr>
-    <tr class="ours"><td>ExpressEdit + Speed-Up LoRA (8 steps)</td><td>2.18 ± 0.02</td></tr>
+    <tr><td><strong>ExpressEdit (30 steps)</strong></td><td><strong>4.06 ± 0.02</strong></td></tr>
+    <tr><td><strong>ExpressEdit + Speed-Up LoRA (8 steps)</strong></td><td><strong>2.18 ± 0.02</strong></td></tr>
   </tbody>
 </table>
-<p class="cap">Single NVIDIA RTX 4090, 1024x1024 images, mean ± std over 10 runs.</p>
-
-<div class="fig">
-  <img src="assets/lora.png" alt="Speed-up LoRA quality comparison" />
-  <p class="cap">The speed-up LoRA cuts latency by 46% with negligible impact on detail quality.</p>
-</div>
+<p class="cap">Single NVIDIA RTX 4090, 1024x1024 images, mean ± std over 10 runs. A speed-up LoRA cuts latency by 46% with negligible quality loss, though full 30-step denoising is recommended for final detail.</p>
 
 <h2>Workflow</h2>
 
 <div class="fig">
   <img src="assets/workflow.png" alt="ExpressEdit four-step workflow" />
-  <p class="cap">Original, optional transformation, selection, and generated result.</p>
+  <p class="cap">Original image, optional transformation, selection, and generated result.</p>
 </div>
 
 <ol>
-  <li>Set the expression tag in the prompt box.</li>
-  <li>Apply a transformation (optional): Scale, Liquify, or Brush.</li>
-  <li>Select the region to edit.</li>
-  <li>Click Generate.</li>
+  <li>Set the expression tag in the prompt box (use the RAG demo if you are unsure which tag to use).</li>
+  <li>Apply a transformation (optional): scale, liquify, brush, or sketch to hint at the desired expression.</li>
+  <li>Select the region to edit, with optional context dots for sub-regions like the eyes.</li>
+  <li>Click Generate to get a clean, noise-free result as a new layer.</li>
 </ol>
 
 <p>For installation and setup, see the <a href="https://github.com/kenantang/ExpressEdit">GitHub repository</a>.</p>
+
+<h2>Applications</h2>
+
+<p>ExpressEdit can be used in these applications:</p>
+
+<ol>
+  <li>For character design, ExpressEdit can provide diverse expressions on design sheets.</li>
+  <li>For storyboarding, ExpressEdit can quickly generate previews with minimal sketching.</li>
+  <li>For comic and manga production, ExpressEdit can adapt to a large set of stylized faces.</li>
+  <li>For high-resolution digital illustrations, ExpressEdit preserves quality with minimal noise.</li>
+  <li>ExpressEdit is fully open-source with no watermarking, making it great for commercial use cases.</li>
+</ol>
 
 <h2>Citation</h2>
 
