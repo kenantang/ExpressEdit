@@ -65,7 +65,7 @@
 
 <h2>Introduction</h2>
 
-<p>Facial expressions bring illustrated characters to life. In real workflows, artists adjust a character's expression again and again, across panels of a comic, frames of a storyboard, or variations on a design sheet. ExpressEdit makes this fast and clean.</p>
+<p>Facial expressions are essential to visual storytelling with illustrated characters. In practice, an artist revises a character's expression many times, across comic panels, storyboard frames, or variations on a design sheet. ExpressEdit makes these repeated edits fast and clean.</p>
 
 <p>ExpressEdit is a free, open-source Photoshop plugin for editing stylized facial expressions, powered by the <a href="https://kenantang.github.io/spice/">SPICE</a> diffusion backend and a database of 135 expression tags. It runs inside Photoshop, so edits combine the precision of native tools with the flexibility of a diffusion model.</p>
 
@@ -89,11 +89,11 @@
 
 <h3>Noise-Free Editing</h3>
 
-<p>Most AI editing models apply noise across the entire image, even outside the region you want to change. Because creative work is iterative, this noise accumulates edit after edit until the image is no longer usable. ExpressEdit modifies only the selected region, so the rest of the image stays untouched. Even under a stress test of 100 repeated edits, artifacts appear only at the selection edge and are removed in a single step.</p>
+<p>Most AI editing models introduce noise across the entire image, even outside the region being edited. Because editing is iterative, this noise accumulates with each step until the image is no longer usable. ExpressEdit modifies only the selected region and leaves the rest of the image unchanged. Even under a stress test of 100 repeated edits, artifacts appear only at the selection edge and can be removed in a single step.</p>
 
 <div class="fig">
   <img src="assets/no_noise.png" alt="Noise comparison across editing models" />
-  <p class="cap">Baseline models introduce destructive noise after each edit. ExpressEdit stays clean across many iterations.</p>
+  <p class="cap">Baseline models introduce destructive noise after each edit. ExpressEdit remains clean across many iterations.</p>
 </div>
 
 <h3>Precise Editing</h3>
@@ -107,7 +107,7 @@
 
 <h3>Fast Inference for Iterative Workflows</h3>
 
-<p>Editing a character is rarely one step. You fix the eyes, then the hair, then the mouth, repeating many times. If each edit takes 40 seconds, the workflow becomes painful. ExpressEdit edits in 2 to 4 seconds on a single consumer GPU, far faster than proprietary models, with zero API cost.</p>
+<p>Editing a character rarely takes a single step. An artist might fix the eyes, then the hair, then the mouth, repeating the cycle many times. When each edit takes 40 seconds, this quickly becomes impractical. ExpressEdit completes each edit in 2 to 4 seconds on a single consumer GPU, far faster than proprietary models and without any API cost.</p>
 
 <div class="table-center">
 <table>
