@@ -4,7 +4,7 @@
 
 ## News
 
-[06.04.2026] ExpressEdit is presented at the CVPR 2026 Workshop on AI for Visual Arts.
+[06.04.2026] ExpressEdit is presented at the CVPR 2026 Workshop on Generative AI for Storytelling (AISTORY).
 
 [04.03.2026] Paper and code released on arXiv.
 
@@ -125,12 +125,11 @@ ExpressEdit is designed for professional and semi-professional illustration work
 ## Citation
 
 ```bibtex
-@article{tang2026expressedit,
-  title   = {ExpressEdit: Fast Editing of Stylized Facial
-             Expressions with Diffusion Models in Photoshop},
-  author  = {Tang, Kenan and Guo, Jiasheng and Lin, Jeffrey
-             and Qin, Yao},
-  journal = {arXiv preprint arXiv:2604.03448},
-  year    = {2026}
+@inproceedings{tang2026expressedit,
+  title={ExpressEdit: Fast Editing of Stylized Facial Expressions with Diffusion Models in Photoshop},
+  author={Tang, Kenan and Guo, Jiasheng and Lin, Jeffrey and Qin, Yao},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={4811--4823},
+  year={2026}
 }
 ```
